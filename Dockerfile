@@ -1,0 +1,1 @@
+FROM --platform=linux/amd python:3.10.8
