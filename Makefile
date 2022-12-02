@@ -13,4 +13,7 @@ install:
 setup: remove-env env install
 
 build:
-	echo "build docker"
+	docker image build -t python_termination_guard:latest .
+
+run: build
+	docker-compose up
