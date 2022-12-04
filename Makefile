@@ -40,4 +40,6 @@ test:
 ci: format lint types
 
 publish:
-	twine
+	find . -type d -name "dist" | xargs rm -rf
+	python3 setup.py sdist 
+	python3 -m  twine upload dist/*
