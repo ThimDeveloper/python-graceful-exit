@@ -17,3 +17,18 @@ build:
 
 run: build
 	docker-compose up
+
+format:
+	pautoflake `pwd`/src 
+	black `pwd`/src
+
+lint:
+	pflake8 `pwd`/src
+
+types:
+	mypy `pwd`/src
+
+test:
+	pytest -s -vv
+
+ci: format lint types
