@@ -11,7 +11,7 @@ from typing import (
     Optional,
     Tuple,
 )
-from graceful_exit.customer_logger.custom_logging import get_logger
+from graceful_exit.custom_logger.custom_logging import get_logger
 from graceful_exit.exeptions.signal_exceptions import SigInt, SigTerm
 from graceful_exit.typings.generics import App
 

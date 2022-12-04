@@ -18,7 +18,7 @@ class App:
     def run_sync(self):
         while True:
             logger.debug("Running app")
-            time.sleep(2)
+            time.sleep(5)
 
     async def exit_handler(self, *args, **kwargs):
         logger.debug("processing exit handler async", status="STARTED")
@@ -28,7 +28,7 @@ class App:
     async def run(self):
         while True:
             logger.debug("Running app")
-            await asyncio.sleep(2)
+            await asyncio.sleep(5)
 
 
 async def main():
