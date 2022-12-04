@@ -4,7 +4,7 @@ import time
 from typing import Any, Dict, Tuple
 from graceful_exit.module import GracefulExit
 from graceful_exit.helpers import wrap_in_system_exit
-from graceful_exit.customer_logger.custom_logging import get_logger
+from graceful_exit.custom_logger.custom_logging import get_logger
 
 logger = get_logger("Docker")
 
@@ -18,7 +18,7 @@ class App:
     def run_sync(self):
         while True:
             logger.debug("Running app")
-            time.sleep(5)
+            time.sleep(1)
 
     async def exit_handler(self, *args, **kwargs):
         logger.debug("processing exit handler async", status="STARTED")
@@ -28,7 +28,7 @@ class App:
     async def run(self):
         while True:
             logger.debug("Running app")
-            await asyncio.sleep(5)
+            await asyncio.sleep(1)
 
 
 async def main():
