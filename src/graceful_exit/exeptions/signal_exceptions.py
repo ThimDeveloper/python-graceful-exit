@@ -1,4 +1,4 @@
-from graceful_exit.logging.custom_logging import get_logger
+from graceful_exit.customer_logger.custom_logging import get_logger
 
 logger = get_logger("SignalExceptions")
 

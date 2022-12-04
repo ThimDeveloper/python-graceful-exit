@@ -4,7 +4,7 @@ import time
 from typing import Any, Dict, Tuple
 from graceful_exit.module import GracefulExit
 from graceful_exit.helpers import wrap_in_system_exit
-from graceful_exit.logging.custom_logging import get_logger
+from graceful_exit.customer_logger.custom_logging import get_logger
 
 logger = get_logger("Docker")
 
