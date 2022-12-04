@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  app:
+    restart: always
+    image: python_termination_guard:latest
+    environment:
+      - LOGLEVEL=DEBUG
