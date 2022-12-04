@@ -1,6 +1,12 @@
 .PHONY: all
 
 
+clean: 
+	find . -type d -name ".mypy_cache" | xargs rm -rf
+	find . -type d -name ".pytest_cache" | xargs rm -rf
+	find . -type d -name "__pycache__" | xargs rm -rf
+	find `pwd`/src -type d -name "*.egg-info" | xargs rm -rf
+
 remove-env:
 	find . -type d -name .venv@ptg | xargs rm -rf
 
@@ -10,7 +16,7 @@ env:
 install:
 	python3 -m pip install -r requirements.txt
 
-setup: remove-env env install
+setup: clean remove-env env install
 
 build:
 	docker image build -t python_termination_guard:latest .
@@ -32,3 +38,6 @@ test:
 	pytest -s -vv
 
 ci: format lint types
+
+publish:
+	twine

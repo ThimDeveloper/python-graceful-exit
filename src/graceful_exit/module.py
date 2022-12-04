@@ -1,10 +1,19 @@
+import inspect
 import signal
-from types import FrameType
-from typing import Any, Callable, Coroutine, Dict, Generic, List, Optional, Tuple, Union
+from types import TracebackType
+from typing import (
+    Any,
+    Awaitable,
+    Callable,
+    Dict,
+    Generic,
+    List,
+    Optional,
+    Tuple,
+)
 from graceful_exit.logging.custom_logging import get_logger
 from graceful_exit.exeptions.signal_exceptions import SigInt, SigTerm
 from graceful_exit.typings.generics import App
-
 
 logger = get_logger("GracefulExit")
 
@@ -13,9 +22,7 @@ class GracefulExit(Generic[App], object):
     def __init__(
         self,
         app: App,
-        exit_handler: Optional[
-            Union[Callable[..., None], Coroutine[Any, None, None]]
-        ] = None,
+        exit_handler: Optional[Callable[..., None | Awaitable[None]]] = None,
         exit_signals: List[signal.Signals] = [signal.SIGTERM, signal.SIGINT],
     ):
         self._app = app
@@ -34,7 +41,7 @@ class GracefulExit(Generic[App], object):
 
     @staticmethod
     def __term_cb(
-        signal_type: int, frame: FrameType, *args: Tuple[Any], **kwargs: Dict[str, Any]
+        signal_type: int, *args: Tuple[Any], **kwargs: Dict[str, Any]
     ) -> None:
         """
         Callback function catching SIGINT and SIGTERM.
@@ -51,16 +58,22 @@ class GracefulExit(Generic[App], object):
         logger.debug("__aenter__")
         return self._app
 
-    async def __aexit__(self, type, value, trackback) -> bool:
+    async def __aexit__(
+        self, type: type[BaseException], value: BaseException, traceback: TracebackType
+    ) -> bool:
         logger.debug("__aexit__")
-        await self._exit_handler()
+        if self._exit_handler and inspect.iscoroutinefunction(self._exit_handler):
+            await self._exit_handler(type, value, traceback)
         return True
 
     def __enter__(self) -> App:
         logger.debug("__enter__")
         return self._app
 
-    def __exit__(self, type, value, traceback) -> bool:
+    def __exit__(
+        self, type: type[BaseException], value: BaseException, traceback: TracebackType
+    ) -> bool:
         logger.debug("__exit__")
-        self._exit_handler()
+        if self._exit_handler and not inspect.iscoroutinefunction(self._exit_handler):
+            self._exit_handler(type, value, traceback)
         return True

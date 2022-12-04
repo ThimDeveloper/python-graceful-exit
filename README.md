@@ -1,4 +1,5 @@
-# python-termination-guard
+# Python Graceful Exit Context Manager
+
 A flexible context manager for python to handle graceful termination of python programs
 
 
