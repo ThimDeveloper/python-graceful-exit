@@ -12,8 +12,6 @@ pip install -U graceful-exit
 ```
 
 
-# Prerequisites 
-
 # How to use:
 
 ## Synchronous example
