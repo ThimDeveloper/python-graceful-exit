@@ -14,7 +14,8 @@ jobs:
           fetch-depth: "0"
       - name: setup environment
         run: |
-          make setup
+          make env
+          pip install -r requirements-ci.txt
       - name: types
         run: |
           make types
@@ -22,6 +23,7 @@ jobs:
         run: |
           make lint
       - name: test
+        env:
+          PYTHONPATH: $PYTHONPATH:$(pwd)/src/graceful_exit:$(pwd)/src:$(pwd)
         run: |
-          pip install -e .
           make test
