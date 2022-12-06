@@ -2,7 +2,7 @@
 
 A flexible context manager for python to handle graceful termination of python programs
 
-
+![GitHub](https://img.shields.io/github/license/ThimDeveloper/python-graceful-exit)
 
 # Installation
 
@@ -10,8 +10,6 @@ A flexible context manager for python to handle graceful termination of python p
 pip install -U graceful-exit
 ```
 
-
-# Prerequisites 
 
 # How to use:
 
