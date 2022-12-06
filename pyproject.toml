@@ -1,3 +1,16 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=63", "wheel"]
+
+[tool.pytest.ini_options]
+addopts = "--cov graceful_exit"
+testpaths = [
+  "tests",
+]
+
+[tool.coverage.run]
+omit = ["*/main.py", "*/**/__init__.py"]
+
 [tool.isort]
 profile = "black"
 

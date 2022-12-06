@@ -23,7 +23,7 @@ build:
 
 run: build
 	docker-compose up
-
+	
 format:
 	pautoflake `pwd`/src 
 	black `pwd`/src
@@ -37,7 +37,7 @@ types:
 test:
 	pytest -s -vv
 
-ci: format lint types
+ci: format lint types test
 
 publish:
 	find . -type d -name "dist" | xargs rm -rf

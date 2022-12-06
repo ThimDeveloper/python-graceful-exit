@@ -2,7 +2,8 @@
 
 A flexible context manager for python to handle graceful termination of python programs
 
-
+![LICENSE](https://img.shields.io/github/license/ThimDeveloper/python-graceful-exit)
+![CODE COVERAGE](./coverage.svg)
 
 # Installation
 
@@ -43,3 +44,4 @@ async def main():
 if __name__ == "__main__":
     wrap_in_system_exit(asyncio.run(main()))
 ```
+

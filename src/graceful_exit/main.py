@@ -6,6 +6,7 @@ from graceful_exit.module import GracefulExit
 from graceful_exit.helpers import wrap_in_system_exit
 from graceful_exit.custom_logger.custom_logging import get_logger
 
+
 logger = get_logger("Docker")
 
 

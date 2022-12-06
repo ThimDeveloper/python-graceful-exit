@@ -1,0 +1,30 @@
+name: Pull requests
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  qa:
+    name: "Code quality check"
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: "0"
+      - name: setup environment
+        run: |
+          make env
+          pip install -r requirements-ci.txt
+      - name: types
+        run: |
+          make types
+      - name: lint
+        run: |
+          make lint
+      - name: test
+        env:
+          PYTHONPATH: $PYTHONPATH:$(pwd)/src/graceful_exit:$(pwd)/src:$(pwd)
+        run: |
+          pip install -e .
+          make test
