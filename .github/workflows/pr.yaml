@@ -23,4 +23,5 @@ jobs:
           make lint
       - name: test
         run: |
+          pip install -e .
           make test
