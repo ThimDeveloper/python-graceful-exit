@@ -1,0 +1,26 @@
+name: Pull requests
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  qa:
+    name: "Code quality check"
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: "0"
+      - name: setup environment
+        run: |
+          make setup
+      - name: types
+        run: |
+          make types
+      - name: lint
+        run: |
+          make lint
+      - name: test
+        run: |
+          make test

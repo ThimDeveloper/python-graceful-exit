@@ -11,6 +11,8 @@ pip install -U graceful-exit
 ```
 
 
+# Prerequisites 
+
 # How to use:
 
 ## Synchronous example
@@ -43,3 +45,4 @@ async def main():
 if __name__ == "__main__":
     wrap_in_system_exit(asyncio.run(main()))
 ```
+

@@ -1,7 +1,7 @@
 import asyncio
 import time
 import signal
-from graceful_exit.customer_logger.custom_logging import get_logger
+from graceful_exit.custom_logger.custom_logging import get_logger
 
 logger = get_logger("MockApp")
 
@@ -18,7 +18,7 @@ class MockApp:
         self.called_exit_handler = False
         self.exit_signal_type = exit_signal_type
         self.sleep_time = sleep_time
-        self.exit_sleep_time = 1
+        self.exit_sleep_time = 0.5
 
     def raise_signal_after_number_iterations(self, iterations: int) -> None:
         if iterations >= self.raise_after_iterations:
