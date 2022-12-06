@@ -26,4 +26,5 @@ jobs:
         env:
           PYTHONPATH: $PYTHONPATH:$(pwd)/src/graceful_exit:$(pwd)/src:$(pwd)
         run: |
+          pip install -e .
           make test
