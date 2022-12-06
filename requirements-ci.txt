@@ -1,5 +1,7 @@
-mypy==0.991
 pip==22.3.1
+setuptools==65.4.1
+mypy==0.991
+structlog==22.3.0
 pyproject-autoflake==1.0.2
 pyproject-flake8==6.0.0
 pytest-asyncio==0.20.2
