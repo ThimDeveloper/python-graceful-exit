@@ -37,6 +37,9 @@ types:
 test:
 	pytest -s -vv
 
+coverage-badge:
+	coverage-badge -o coverage.svg -f
+
 ci: format lint types test
 
 package:
