@@ -18,6 +18,8 @@ jobs:
           pip install -r requirements-ci.txt
 
       - name: Coverage Badge
+        env:
+          PYTHONPATH: $PYTHONPATH:$(pwd)/src/graceful_exit:$(pwd)/src:$(pwd)
         run: |
           make test
           make coverage-badge
