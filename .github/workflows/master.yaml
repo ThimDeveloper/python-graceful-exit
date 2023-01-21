@@ -24,15 +24,32 @@ jobs:
           pip install -e .
           make test
           make coverage-badge
+  changes:
+    needs: coverage
+    runs-on: ubuntu-22.04
+    # Required permissions
+    permissions:
+      pull-requests: read
+    # Set job outputs to values from filter step
+    outputs:
+      coverage-badge: ${{ steps.filter.outputs.coverage-badge }}
 
-      - name: Verify Changed files
-        uses: tj-actions/verify-changed-files@v12
-        id: changed_files
+    steps:
+      # For pull requests it's not necessary to checkout the code
+      - uses: dorny/paths-filter@v2.11.1
+        id: filter
         with:
-          files: coverage.svg
+          list-files: "json"
+          filters: |
+            coverage-badge:
+              - '.'
 
+  commit-badge:
+    needs: coverage
+    if: ${{ needs.changes.outputs.coverage-badge == 'true' }}
+    runs-on: ubuntu-22.04
+    steps:
       - name: Commit files
-        if: steps.changed_files.outputs.files_changed == 'true'
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -40,7 +57,6 @@ jobs:
           git commit -m "Updated coverage.svg"
 
       - name: Push changes
-        if: steps.changed_files.outputs.files_changed == 'true'
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.github_token }}
