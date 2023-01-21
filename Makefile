@@ -39,7 +39,9 @@ test:
 
 ci: format lint types test
 
-publish:
+package:
 	find . -type d -name "dist" | xargs rm -rf
-	python3 setup.py sdist 
+	python3 -m build
+
+publish: package
 	python3 -m  twine upload dist/*
