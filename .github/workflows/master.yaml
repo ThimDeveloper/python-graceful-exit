@@ -24,13 +24,15 @@ jobs:
           pip install -e .
           make test
           make coverage-badge
-
-  commit-badge:
+  changes:
     needs: coverage
     runs-on: ubuntu-22.04
     # Required permissions
     permissions:
       pull-requests: read
+    # Set job outputs to values from filter step
+    outputs:
+      coverage-badge: ${{ steps.filter.outputs.coverage-badge }}
 
     steps:
       - uses: actions/checkout@v3
@@ -45,8 +47,15 @@ jobs:
             coverage-badge:
               - '.'
 
+  commit-badge:
+    needs: changes
+    if: ${{ needs.changes.outputs.coverage-badge == 'true' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Commit files
-        if: ${{ steps.filter.outputs.coverage-badge == 'true' }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -54,7 +63,6 @@ jobs:
           git commit -m "Updated coverage.svg"
 
       - name: Push changes
-        if: ${{ steps.filter.outputs.coverage-badge == 'true' }}
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.github_token }}
